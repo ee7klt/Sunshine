@@ -50,7 +50,7 @@ public class ForecastFragment extends Fragment {
         int id = item.getItemId();
         if (id == R.id.action_refresh) {
             FetchWeatherTask fetchWeather = new FetchWeatherTask();
-            fetchWeather.execute();
+            fetchWeather.execute("94043");
 
             return true;
         }
@@ -87,14 +87,14 @@ public class ForecastFragment extends Fragment {
     }
 
 
-    public class FetchWeatherTask extends AsyncTask<Integer, Void,Void> {
+    public class FetchWeatherTask extends AsyncTask<String, Void,Void> {
 
 
         private final String LOG_TAG = FetchWeatherTask.class.getSimpleName();
 
 
         @Override
-        protected Void doInBackground(Integer... postcode) {
+        protected Void doInBackground(String... params) {
             // These two need to be declared outside the try/catch
             // so that they can be closed in the finally block.
             HttpURLConnection urlConnection = null;
@@ -103,25 +103,29 @@ public class ForecastFragment extends Fragment {
             // Will contain the raw JSON response as a string.
             String forecastJsonStr = null;
 
-            Uri.Builder builder = new Uri.Builder();
-            builder.scheme("https")
-                    .authority("api.openweathermap.org")
-                    .appendPath("data")
-                    .appendPath("2.5")
-                    .appendPath("forecast")
-                    .appendPath("daily")
-                    .appendQueryParameter("q", postcode)
-                    .appendQueryParameter("mode", "json")
-                    .appendQueryParameter("units", "metric")
-                    .appendQueryParameter("cnt", "7")
-                   
-            String myUrl = builder.build().toString();
+
+
 
             try {
                 // Construct the URL for the OpenWeatherMap query
                 // Possible parameters are avaiable at OWM's forecast API page, at
                 // http://openweathermap.org/API#forecast
-                URL url = new URL(myUrl);
+
+                Uri.Builder builder = new Uri.Builder();
+                builder.scheme("http")
+                        .authority("api.openweathermap.org")
+                        .appendPath("data")
+                        .appendPath("2.5")
+                        .appendPath("forecast")
+                        .appendPath("daily")
+                        .appendQueryParameter("q", params[0])
+                        .appendQueryParameter("mode", "json")
+                        .appendQueryParameter("units", "metric")
+                        .appendQueryParameter("cnt", "7").build();
+
+                URL url = new URL(builder.toString());
+
+                Log.v(LOG_TAG, "Built URI" + builder.toString());
 
                 // Create the request to OpenWeatherMap, and open the connection
                 urlConnection = (HttpURLConnection) url.openConnection();
