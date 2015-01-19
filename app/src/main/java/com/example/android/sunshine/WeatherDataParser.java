@@ -17,7 +17,8 @@ public class WeatherDataParser {
         // TODO: add parsing code here
         JSONObject parseWeatherObj = new JSONObject(weatherJsonStr);
         JSONArray weathers = parseWeatherObj.getJSONArray("list");
-        JSONObject temp = weathers.getJSONObject("temp");
+
+        JSONObject temp = weathers.getJSONObject(dayIndex);
         JSONObject max = temp.getJSONObject("max");
         Log.d("weathers",weathers.toString());
 
