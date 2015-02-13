@@ -93,7 +93,7 @@ public class ForecastFragment extends Fragment {
     }
 
 
-    public class FetchWeatherTask extends AsyncTask<String, Void,Void> {
+    public class FetchWeatherTask extends AsyncTask<String, Void, String[]> {
 
 
         private final String LOG_TAG = FetchWeatherTask.class.getSimpleName();
@@ -174,11 +174,15 @@ public class ForecastFragment extends Fragment {
                 resultStrs[i] = day + " - " + description + " - " + highAndLow;
             }
 
+            for (String s: resultStrs) {
+                Log.v(LOG_TAG, "Forecast entry: " + s);
+            }
+
             return resultStrs;
         }
 
         @Override
-        protected Void doInBackground(String... params) {
+        protected String[] doInBackground(String... params) {
             // These two need to be declared outside the try/catch
             // so that they can be closed in the finally block.
             HttpURLConnection urlConnection = null;
@@ -260,6 +264,8 @@ public class ForecastFragment extends Fragment {
                     }
                 }
             }
+
+
             return null;
         }
 
