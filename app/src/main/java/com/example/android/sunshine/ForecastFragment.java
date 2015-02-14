@@ -33,6 +33,8 @@ import java.util.Date;
  */
 public class ForecastFragment extends Fragment {
 
+
+    
     public ForecastFragment() {
     }
 
