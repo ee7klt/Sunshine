@@ -33,8 +33,8 @@ import java.util.Date;
  */
 public class ForecastFragment extends Fragment {
 
+    private ArrayAdapter<String> forecastAdapter;
 
-    
     public ForecastFragment() {
     }
 
@@ -276,6 +276,16 @@ public class ForecastFragment extends Fragment {
 
 
             return null;
+        }
+
+        @Override
+        protected void onPostExecute(String[] result) {
+            if (result!= null) {
+                forecastAdapter.clear();
+                for(String dayForecastStr : result) {
+                    forecastAdapter.add(dayForecastStr);
+                }
+            }
         }
 
 
