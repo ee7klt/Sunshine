@@ -50,8 +50,6 @@ public class ForecastFragment extends Fragment {
         inflater.inflate(R.menu.forecastfragment, menu);
     }
 
-
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -72,24 +70,23 @@ public class ForecastFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
+        View rootView = inflater.inflate(R.layout.fragment_main, container, false);
         ArrayList<String> weekForecast = new ArrayList<String>();
-        weekForecast.add("placeholder");
+        weekForecast.add("Today - Sunny - 88/63");
+        weekForecast.add("Tomorrow - Foggy - 70/46");
+        weekForecast.add("Weds - Cloudy - 72/63");
+        weekForecast.add("Thurs - Rainy - 64/51");
+        weekForecast.add("Fri - Foggy - 70/46");
+        weekForecast.add("Sat - Sunny - 76/68");
 
 
-        //The Array Adapter will take data from a source and
-        //use it to populate the ListView it's attached to.
-        forecastAdapter = new ArrayAdapter<String>(
-                getActivity(),    // The current context (this activity)
-                R.layout.list_item_forecast,   // The name of the layout ID
-                R.id.list_item_forecast_textview,   // The ID of the textview to populate
+        ArrayAdapter<String> forecastAdapter = new ArrayAdapter<String>(
+                getActivity(),
+                R.layout.list_item_forecast,
+                R.id.list_item_forecast_textview,
                 weekForecast
         );
 
-        View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-
-
-        //Get a reference to the ListView, and attach this adapter to it
         ListView listView = (ListView) rootView.findViewById(R.id.listview_forecast);
         listView.setAdapter(forecastAdapter);
 
