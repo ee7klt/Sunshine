@@ -1,6 +1,7 @@
 package com.example.android.sunshine;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -98,11 +99,10 @@ public class ForecastFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Context context = getActivity();
-                String forecastItem = forecastAdapter.getItem(position);
-                int duration = Toast.LENGTH_SHORT;
-                Toast toast = Toast.makeText(context, forecastItem,duration);
-                toast.show();
+                String forecast = forecastAdapter.getItem(position);
+                Intent launchDetailActivity = new Intent(getActivity(), DetailActivity.class);
+                launchDetailActivity.putExtra(Intent.EXTRA_TEXT,forecast);
+                startActivity(launchDetailActivity);
             }
         });
 
