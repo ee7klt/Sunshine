@@ -65,8 +65,9 @@ public class ForecastFragment extends Fragment {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.action_refresh) {
-            SharedPreferences prefs = PreferenceManager.getSharedPreferences(getActivity());
-            String location = prefs.getString(getString(R.string.pref_location_key),getString(R.string.pref_location_default));
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+            String location = prefs.getString(getString(R.string.pref_location_key),
+                    getString(R.string.pref_location_default));
             FetchWeatherTask fetchWeather = new FetchWeatherTask();
             fetchWeather.execute(location);
 
